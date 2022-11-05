@@ -1,0 +1,10 @@
+<!--components/rule-info/rule-info.wxml-->
+<!-- <text>components/rule-info/rule-info.wxml</text> -->
+<view class="gameRule">
+  <view class="rule-list animated bounceIn" wx:if="{{showRule}}">
+    <view>规则说明：</view>
+    <view>1.开局根据<text class="dragonheader-word">龙头词</text>进行接龙，<text class="dragonheader-word">龙头词</text> 为随机生成；</view>
+    <view>2.请在规定时间内进行接龙，超时将自动放弃，接由顺序对手进行接龙；3次弃权即为失败！</view>
+  </view>
+  <image src="/images/info.png" bindtap="_toggleInfo" style="width: 100rpx;height:100rpx;"></image>
+</view>

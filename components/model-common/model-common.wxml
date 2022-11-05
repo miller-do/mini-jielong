@@ -1,0 +1,16 @@
+<!--components/model-common/model-common.wxml-->
+<view class="model-shade" wx:if="{{show}}" bindtap="clickMask"></view>
+<view class="model-container fc animated bounceIn" wx:if="{{show}}">
+  <view class="model-content-wrap">
+    <view class="model-title"><text>{{propTitle}}</text></view>
+    <view class="model-content">
+      <view class="text-center">{{propContent}}</view>
+    </view>
+    <view class="model-btns">
+      <view class="fsa">
+        <image src="/images/cancel.png" class="btn-img" bindtap="oncancel"></image>
+        <image src="/images/confirm.png" class="btn-img" bindtap="onconfirm"></image>
+      </view>
+    </view>
+  </view>
+</view>

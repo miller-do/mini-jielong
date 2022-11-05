@@ -1,0 +1,28 @@
+<!--pages/model/model.wxml-->
+<!-- <text>pages/model/model.wxml</text> -->
+<image src="/images/page-bg-model1.jpg" style="height: 100%;width: 100%;opacity: .6;"></image>
+<view class="fc page-wrap">
+  <view class="list-wrap">
+    <block wx:for="{{bgModels}}" wx:for-item="item" wx:key="index">
+      <view class="model-item" bindtap="gofight" data-item="{{item}}">
+        <view>
+          <image src="{{item.url}}" mode="widthFix" style="width: 100%;"></image>
+        </view>
+        <view class="text-center text-wrap"><text>{{item.name}}</text></view>
+      </view>
+    </block>
+    
+  </view>
+  <view class="nav-btns">
+    <!-- <view class="btn-action" bindtap="backtap">返回</view> -->
+    <view class="btns-wrap">
+      <view >
+        <image class="animated slideInLeft" bindtap="backtap" src="/images/back.png" style="width:52px;height: 52px;"/>
+      </view>
+      <rule-info class="animated slideInRight"></rule-info>
+      <!-- <view>
+        <image class="animated slideInRight" bindtap="return false" src="/images/info.png" style="width:52px;height: 52px;"/>
+      </view> -->
+    </view>
+  </view>
+</view>

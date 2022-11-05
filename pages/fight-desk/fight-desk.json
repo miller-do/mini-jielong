@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "rule-info":"/components/rule-info/rule-info",
+    "model-over":"/components/model-over/model-over",
+    "model-common":"/components/model-common/model-common"
+  },
+  "pageOrientation":"landscape"
+}

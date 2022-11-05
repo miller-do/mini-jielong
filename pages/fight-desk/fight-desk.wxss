@@ -1,0 +1,153 @@
+/* pages/fight-desk/fight-desk.wxss */
+page{
+  background-color: burlywood;
+  height: 100%;
+}
+.page-wrap{
+  height: 100%;
+}
+.page-content{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+}
+.role-list{
+  display: flex;
+  margin-top: 30rpx;
+}
+.role-avitar{
+  width: 30rpx;
+  height: 30rpx;
+  border: 3px solid #999;
+  margin-left: 40px;
+}
+.role-info{
+  display: flex;
+}
+.role-name{
+  font-size: 10rpx;
+  background-color: rgba(112, 112, 112, .6);
+  margin-left: 4rpx;
+  padding: 2rpx 4rpx;
+  color: #fff;
+  border-radius: 4rpx;
+  margin-bottom: 2rpx;
+}
+.role-status{
+  font-size: 10rpx;
+  background-color: rgba(112, 112, 112, .6);
+  margin-left: 4rpx;
+  padding: 0 4rpx;
+  color: rgb(236, 180, 96);
+  border-radius: 4rpx;
+  margin-bottom: 2rpx;
+}
+.game-container-wrap{
+  position: relative;
+}
+.dragonheader{
+  position: absolute;
+  left: 50%;
+  top: -6px;
+  margin-left: -50px;
+  height: 40px;
+  width: 100px;
+}
+.dragonheader-text{
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  font-weight: 600;
+  color: rgb(148, 70, 7);
+  text-shadow: 2px 2px 2px #ccc;
+}
+
+.game-container{
+  position: absolute;
+  top: 44rpx;
+  width: 100%;
+  height: 130rpx;
+  padding: 12rpx 74rpx;
+  box-sizing: border-box;
+}
+.game-content{
+  /* display: flex; */
+  height: 100%;
+  padding: 10rpx;
+  box-sizing: border-box;
+  border-radius: 18px;
+  background-color: rgba(228, 227, 226, 0.6);
+}
+.words-wrap{
+  /* display: flex; */
+  padding: 2rpx 6rpx;
+  line-height: 28rpx;
+  margin-bottom: 2rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #999;
+}
+.text-type{
+  background-color: rgba(238, 220, 63, 0.8);
+}
+.text-type1{
+  background-color: rgba(38, 219, 120, 0.8);
+}
+.text-typee{
+  /* background-color: rgba(38, 219, 120, 0.8); */
+  color: #eee;
+}
+.actions{
+  position: absolute;
+  right: 40rpx;
+  top: 40rpx;
+
+}
+.notice{
+  display: flex;
+}
+.notice-btn{
+ margin: 0 4rpx;
+}
+.tools{
+  position: absolute;
+  bottom: 20px;
+  padding: 0 40px;
+}
+
+.weui-input{
+  background-color: rgba(250, 249, 249, 0.7);
+  padding: 5rpx 6rpx;
+}
+.cloud-wrap{
+  width: 100%;
+  position: relative;
+  left: 0;
+  z-index: -1;
+}
+.cloud{
+  animation-duration:60s;
+  animation-delay: 0s;
+  /* animation-iteration-count: 2; */
+}
+.gameRule{
+  position: relative;
+}
+.rule-list{
+  position: absolute;
+  left: 4rpx;
+  bottom: 46rpx;
+  width: 220rpx;
+  background-color: rgba(54, 54, 54, 0.6);
+  padding: 4rpx 6rpx;
+  box-sizing: border-box;
+  border-radius: 6rpx;
+  font-size: 10rpx;
+  box-shadow: 2rpx 2rpx 2rpx rgb(87, 87, 87);
+  color: #fff;
+}
+.dragonheader-word{
+  font-weight: bold;
+}

@@ -1,0 +1,9 @@
+<!--pages/index/index.wxml-->
+<!-- <text>pages/index/index.wxml</text> -->
+<view class="container">
+  <!-- <view class="text-center">接龙圣手</view> -->
+  <cover-image src="{{bgImg}}"></cover-image>
+  <view class="fc">
+    <image class="animated bounceInUp" bindtap="startgame" src="{{btnImg}}" style="width:154px;height: 70px;"/>
+  </view>
+</view>

@@ -1,0 +1,21 @@
+/* components/rule-info/rule-info.wxss */
+.gameRule{
+  position: relative;
+}
+.rule-list{
+  position: absolute;
+  /* left: 4rpx; */
+  right:0;
+  bottom: 120rpx;
+  width: 320rpx;
+  background-color: rgba(54, 54, 54, 0.6);
+  padding: 16rpx 10rpx;
+  box-sizing: border-box;
+  border-radius: 6rpx;
+  font-size: 10rpx;
+  box-shadow: 2rpx 2rpx 2rpx rgb(87, 87, 87);
+  color: #fff;
+}
+.dragonheader-word{
+  font-weight: bold;
+}

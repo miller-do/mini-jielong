@@ -1,0 +1,5 @@
+/* pages/index/index.wxss */
+page{
+  background-color: black;
+  color: #fff;
+}

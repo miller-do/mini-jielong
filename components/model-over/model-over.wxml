@@ -1,0 +1,30 @@
+<!--components/model-fail/model-fail.wxml-->
+<!-- <text>components/model-fail/model-fail.wxml</text> -->
+<view class="page-container animated slideInDown" wx:if="{{gameOver}}">
+  <view class="content-wrap">
+    <view class="game-info">
+      <view class="user-info"></view>
+      <view>人机对战</view>
+    </view>
+    <view class="fc">
+      <view  class="">
+        <view class="text-wrap">
+          <view class="text-content">GAME OVER</view>
+          <view class="over-result" wx:if="{{sucess}}">
+            <view class="text-center">胜利</view>
+            <view class="text-center desc">阁下才高八斗，在下甘拜下风！</view>
+          </view>
+          <view class="over-result" wx:else="{{!sucess}}">
+            <view class="text-center">败北</view>
+            <view class="text-center desc">手下败将！高手在哪里？</view>
+          </view>
+
+        </view>
+        <view class="btn-group fsa">
+          <image src="/images/getout.png" bindtap="onOvergame" style="width: 80rpx;height: 40rpx;"></image>
+          <image src="/images/restart.png" bindtap="onRestart" style="width: 80rpx;height: 40rpx;"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
