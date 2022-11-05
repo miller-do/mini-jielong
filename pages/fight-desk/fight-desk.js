@@ -106,7 +106,6 @@ Page({
       title: '对手作答中',
     })
     var timer=setTimeout(()=>{
-      // console.log(wordsdata)
       // console.log(this.data.words)
       let lastword,indexword;
       if(this.data.words.length<1){
