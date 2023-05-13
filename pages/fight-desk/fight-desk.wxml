@@ -2,94 +2,186 @@
 <view class="page-wrap">
   <image class="bg-desk" src="/images/bg-desk.jpg" style="width: 100%;height: 100%;opacity: .5;"></image>
   <view class="page-content">
-    <!-- <view class="text-center">对战大厅</view> -->
-    <view class="role-list">
-      <view class="role-info">
-        <view class="role-avitar" style="border: 3px solid rgba(38, 219, 120, 0.8);">
-          <view wx:if="{{canIUseOpenData}}">
-            <open-data type="userAvatarUrl"></open-data>
+    <!-- buttons="{{buttons}}" -->
+    <mp-half-screen-dialog 
+      closabled="{{false}}"
+      bindbuttontap="buttontap"
+      show="{{show}}"
+      maskClosable="{{false}}" 
+    >
+      <view slot="title">
+        <view style="margin-top: 40rpx;">
+          <view class="weui-flex" style="align-items: center;">
+            <image src="../../images/jielong.jpg" style="width: 60rpx;height: 60rpx;border-radius: 50%;"></image>
+            <text style="padding-left:20rpx;font-size: 26rpx;">接龙圣手 申请</text>
           </view>
-          <!-- <image src="/images/portrai.jpg" style="width: 100%;height: 100%;"></image> -->
-        </view>
-        <view>
-          <view class="role-name">
-            <open-data type="userNickName"></open-data>
-          </view>
-          <view class="role-status">Lv：首席书童</view>
-          <!-- 生命值，跳过三次即阵亡 -->
-          <view class="role-status">生命值：{{healthStatus[0].value}}</view>
-        </view>
-      </view>
-
-      <view class="role-info">
-        <view class="role-avitar" style="border: 3px solid rgba(238, 220, 63, 0.8);">
-          <image src="/images/duichanchang.jpg" style="width: 100%;height: 100%;"></image>
-        </view>
-        <view>
-          <view class="role-name">夺命剪刀脚(电脑)</view>
-          <view class="role-status">Lv：对穿肠</view>
-          <!-- 生命值，跳过三次即阵亡 -->
-          <view class="role-status">生命值：{{healthStatus[1].value}}</view>
+          <view class="divide">获取你的昵称、头像</view>
+          <view class="divide" style="font-size: 18rpx;color: #999;">角色对战信息显示</view>
         </view>
       </view>
+      <view slot="desc">
+        <form catchsubmit="formSubmit">
+          <mp-cells>
+            <mp-cell prop="avatarUrl" title="头像" link hover>
+              <button open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar" class="avatar-wrapper" style="position: relative;overflow: inherit;height:24px;padding: 0;background-color: unset;text-align: left;">
+                <image class="avatar" src="{{avatarUrl}}" bind:chooseavatar="onChooseAvatar" style="position: absolute; height: 60rpx;width: 60rpx;"></image>
+              </button> 
 
-    </view>
-
-    <view class="game-container-wrap">
-      <image class="width100" src="/images/desk-bg.png"></image>
-      <view class="dragonheader">
-        <image class="width100 height100" src="/images/dragonheader.png"></image>
-        <view class="dragonheader-text animated bounceIn">{{dragonHeader.text}}</view>
-      </view>
-      <view class="game-container">
-        <scroll-view class="game-content" scroll-y="true" scroll-top="{{wordsBoxHeight}}">
-          <view class="words-box">
-            <block wx:for="{{words}}"  wx:for-item="item" wx:key="index">
-              <text class="words-wrap text-type{{item.tag}}">{{item.text}}</text>
-            </block>
-            <text class="words-wrap text-typee animated bounceIn infinite">虚位以待……</text>
+            </mp-cell>
+            <mp-cell prop="nickname" title="昵称">
+              <input type="nickname" name="nickname" class="weui-input" placeholder="点击填写" style="background-color: unset;padding-left: 50rpx;box-sizing: border-box;"/>
+            </mp-cell>
+          </mp-cells>
+          <!-- <view class="divide">
+            <text style="font-size: 28rpx; color:rgb(50, 97, 185);">随机头像昵称</text>
+          </view> -->
+          <view class="weui-flex" style="padding-top: 40rpx;">
+            <view class="weui-flex__item t-center">
+              <button size="mini" plain bindtap="reject">拒绝</button>
+            </view>
+            <view class="weui-flex__item t-center">
+              <button size="mini" type="primary" plain formType="submit">允许</button>
+            </view>
           </view>
-        </scroll-view>
-      </view>
-    </view>
-    
-
-    <!-- 提示 -->
-    <view class="actions fs" wx:if="{{showNoticeGroup}}">
-      <view class="notice">
-        <!-- <button class="notice-btn" type="primary" size="mini">过</button>
-        <button class="notice-btn" type="primary" size="mini">提示</button> -->
-        <!-- <button class="notice-btn" type="primary" size="mini" wx:if="{{showNotice}}" bindtap="showInput">接龙</button> -->
-        <image wx:if="{{showPass}}" src="/images/pass.png" bindtap="gopass" style="width: 30rpx;height: 30rpx;"></image>
-        <image wx:if="{{showNotice}}" src="/images/tips.png" bindtap="gettips" style="width: 60rpx;height: 30rpx;"></image>
-        <image wx:if="{{showInputBtn}}" bindtap="showInput" src="/images/btn-goon.png" style="width: 60rpx;height: 30rpx;"></image>
-      </view>
-      <view class="">
-        <form class="animated bounceInRight" catchsubmit="formSubmit" catchreset="formReset" wx:if="{{isshowForm}}">
-          <view class="fs">
-            <input class="weui-input" confirm-type="send" value="{{aword}}" bindinput="setbindinput" placeholder-style="color:#ccc" placeholder="请输入四字成语" />
-            <!-- <button class="mini-btn" type="primary" size="mini" bindtap="sendword">发送</button> -->
-            <image bindtap="sendword" src="/images/send.png" style="width: 60rpx;height: 30rpx;"></image>
-          </view>
+            <!-- <button formType="submit">submit</button> -->
         </form>
       </view>
+        <!-- <get-user-info></get-user-info> -->
+    </mp-half-screen-dialog>
+    <!-- <view class="text-center">对战大厅</view> -->
+    <view class="game-container-wrap">
+      <!-- 用户信息 -->
+      <view class="role-list" wx:if="{{mode!=1}}">
+        <view class="role-info">
+          <view class="role-avitar" bindtap="getuseInfo" style="border: 3px solid rgba(38, 219, 120, 0.8);">
+            <!-- <view wx:if="{{canIUseOpenData}}" bindtap="getuseInfo">
+              <open-data type="userAvatarUrl"></open-data>
+            </view> -->
+            <image src="{{avatarUrl}}" style="width: 100%;height: 100%;"></image>
+          </view>
+          <view class="game-role-info">
+            <view class="role-name">
+              <view wx:if="{{nickname}}">{{nickname}}</view>
+              <open-data type="userNickName" wx:else=""></open-data>
+            </view>
+            <view class="role-status">Lv：首席书童</view>
+            <!-- 生命值，跳过三次即阵亡 -->
+            <view class="role-status">生命值：{{healthStatus[0].value}}</view>
+          </view>
+        </view>
+
+        <view class="role-info">
+          <view class="role-avitar" style="border: 3px solid rgba(238, 220, 63, 0.8);">
+            <image src="/images/duichanchang.jpg" style="width: 100%;height: 100%;"></image>
+          </view>
+          <view class="game-role-info">
+            <view class="role-name">夺命剪刀脚(电脑)</view>
+            <view class="role-status">Lv：对穿肠</view>
+            <!-- 生命值，跳过三次即阵亡 -->
+            <view class="role-status">生命值：{{healthStatus[1].value}}</view>
+          </view>
+        </view>
+      </view>
+      <!-- /用户信息 -->
+
+      <!-- 答题控件 -->
+      <view class="actions animated bounceIn" wx:if="{{showNoticeGroup}}">
+        <view class="actions-flex"  wx:if="{{mode==2}}">
+          <view class="notice">
+            <!-- <button class="notice-btn" type="primary" size="mini">过</button>
+            <button class="notice-btn" type="primary" size="mini">提示</button> -->
+            <!-- <button class="notice-btn" type="primary" size="mini" wx:if="{{showNotice}}" bindtap="showInput">接龙</button> -->
+            <image wx:if="{{showPass}}" src="/images/pass.png" bindtap="gopass" style="width: 58rpx;height: 58rpx;"></image>
+            <image wx:if="{{showNotice}}" src="/images/tips.png" bindtap="gettips" style="width: 116rpx;height: 58rpx;"></image>
+            <image wx:if="{{showInputBtn}}" bindtap="showInput" src="/images/btn-goon.png" style="width: 116rpx;height: 58rpx;"></image>
+          </view>
+          <view class="">
+            <form class="animated bounceInRight" catchsubmit="formSubmit" catchreset="formReset" wx:if="{{isshowForm}}">
+              <view class="fs">
+                <input class="weui-input" confirm-type="send" value="{{aword}}" bindinput="setbindinput" placeholder-style="color:#ccc" placeholder="请输入四字成语" />
+                <!-- <button class="mini-btn" type="primary" size="mini" bindtap="sendword">发送</button> -->
+                <image bindtap="sendword" src="/images/send.png" style="width: 116rpx;height: 58rpx;"></image>
+              </view>
+            </form>
+          </view>
+        </view>
+      </view>
+      <!-- /答题控件 -->
+
+      <!-- 过词模式 -->
+      <view class="play-desk animated bounceIn" wx:if="{{mode==1}}">
+        <image class="width100" src="/images/bg-browser.png" style="height: 1100rpx;"></image>
+        <view class="play-desk-wrap">
+          <view class="box-decration">
+            <view class="word-content text-center animated {{animatedType}}" wx:if="{{browseMode.browseWord.text}}">
+            {{browseMode.browseWord.text}}
+            </view>
+            <view class="explain-content">
+              <view class="font-weight">解释：</view>
+              <view>{{browseMode.browseWord.ex?browseMode.browseWord.ex:'暂无数据'}}</view>
+              
+            </view>
+          </view>
+        </view>
+        <view class="notice1">
+          <image wx:if="{{showPass}}" src="/images/btn-next.png" bindtap="gopass" style="width: 104rpx;height: 58rpx;"></image>
+        </view>
+      </view>
+      <!-- /过词模式 -->
+
+
+      <!-- 答题桌面 -->
+      <view class="play-desk" wx:if="{{mode==2}}">
+        <image class="width100" src="/images/desk-bg.png" style="height: 1100rpx;"></image>
+
+        <view class="dragonheader">
+          <!-- <image class="width100 height100" src="/images/dragonheader.png"></image> -->
+          开局龙头：<text class="dragonheader-text animated bounceIn">{{dragonHeader.text}}</text>
+        </view>
+
+        <!-- 透明背景 -->
+        <view class="width100 height100 desk-bg-wrap">
+          <view class="desk-bg width100 height100"></view>
+        </view>
+
+        <view class="game-container">
+          <scroll-view class="game-content" scroll-y="true" scroll-top="{{wordsBoxHeight}}">
+            <view class="words-box">
+              <block wx:for="{{words}}"  wx:for-item="item" wx:key="id">
+                <view class="inline-block words-wrap">
+                  <image class="bg-word width100 height100" src="/images/bg-word.png"></image>
+                  <text class="word-style text-type{{item.tag}}">{{item.text}}</text>
+                </view>
+              </block>
+              <!-- animated bounceIn infinite -->
+              <view class="inline-block words-wrap">
+                <image class="bg-word width100 height100" src="/images/bg-word.png"></image>
+                <text class="word-style text-typee animated bounceIn infinite">虚位以待</text>
+              </view>
+             
+            </view>
+          </scroll-view>
+        </view>
+      </view>
+      <!-- /答题桌面 -->
+      
     </view>
 
     <view class="tools">
       <view class="sub-list animated bounceIn" wx:if="{{showMenu}}">
         <view bindtap="setSound">
-          <image src="/images/{{sound}}.png" style="width:38rpx;height:38rpx;"></image>
+          <image src="/images/{{sound}}.png" style="width: 58rpx;height: 58rpx;"></image>
         </view>
         <!-- <view bindtap="setting">
-          <image src="/images/setting.png" style="width:38rpx;height:38rpx;"></image>
+          <image src="/images/setting.png" style="width: 104rpx;height: 104rpx;"></image>
         </view> -->
         <view bindtap="outGame">
-          <image src="/images/out.png" style="width:38rpx;height:38rpx;"></image>
+          <image src="/images/out.png" style="width: 58rpx;height: 58rpx;"></image>
         </view>
       </view>
       <view class="fs">
         <view class="" bindtap="toggleMenu">
-          <image src="/images/list.png" style="width:38rpx;height:38rpx;"></image>
+          <image src="/images/list.png" style="width: 58rpx;height: 58rpx;"></image>
         </view>
         <!-- <rule-info></rule-info> -->
         <view bindtap="gameRule" class="gameRule">
@@ -98,7 +190,7 @@
             <view>1.开局根据<text class="dragonheader-word">龙头词</text>进行接龙，<text class="dragonheader-word">龙头词</text> 为随机生成；</view>
             <view>2.请在规定时间内进行接龙，超时将自动放弃，接由顺序对手进行接龙；3次弃权即为失败！</view>
           </view>
-          <image src="/images/info.png" style="width:38rpx;height:38rpx;"></image>
+          <image src="/images/info.png" style="width: 58rpx;height: 58rpx;"></image>
         </view>
       </view>
     </view>
@@ -106,33 +198,32 @@
     <!-- 云朵动画 -->
     <view class="cloud-wrap">
       <view class="cloud animated slideInRight infinite">
-        <image src="/images/cloud.png" style="width:100rpx;height:38rpx;"></image>
+        <image src="/images/cloud.png" style="width:500rpx;height:276rpx;"></image>
       </view>
     </view>
     <!-- /云朵动画 -->
-
-    <!-- 失败模态框 cpn-animated-->
-    <model-over
-      class="game-over"
-      bindgetout="onGetout"
-      bindrestart="onRestart"
-      >
-    </model-over>
-    <!-- class="cpn-animated" -->
-    <model-common 
-    class="model-common"
-    prop-title="{{propTitle}}"
-    prop-content="{{propContent}}"
-    bindconfirm="onconfirm"
-    bindcancel="oncancel"
-    ></model-common>
-    <model-common 
-    class="model-common-health"
-    prop-title="{{healModel.title}}"
-    prop-content="{{healModel.content}}"
-    bindconfirm="surrender"
-    bindcancel="oncancelHealth"
-    ></model-common>
+    
   </view>
-
+  <!-- 失败模态框 cpn-animated-->
+  <model-over
+    class="game-over"
+    bindgetout="onGetout"
+    bindrestart="onRestart"
+    >
+  </model-over>
+  <!-- class="cpn-animated" -->
+  <model-common 
+  class="model-common"
+  prop-title="{{propTitle}}"
+  prop-content="{{propContent}}"
+  bindconfirm="onconfirm"
+  bindcancel="oncancel"
+  ></model-common>
+  <model-common 
+  class="model-common-health"
+  prop-title="{{healModel.title}}"
+  prop-content="{{healModel.content}}"
+  bindconfirm="surrender"
+  bindcancel="oncancelHealth"
+  ></model-common>
 </view>

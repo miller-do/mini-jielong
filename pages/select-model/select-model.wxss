@@ -8,7 +8,7 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(250, 165, 7, 0.2);
+  /* background-color: rgba(250, 165, 7, 0.2); */
   position: absolute;
   left: 0;
   top: 0;
@@ -27,7 +27,7 @@ page{
   margin: 0 6px;
   box-sizing: border-box;
   color: #ccc;
-  background-color: rgba(115, 115, 115, 0.6);
+  background-color: rgba(156, 135, 95, 0.6);
   box-shadow: 1px 1px 3px #333;
 }
 .text-wrap{

@@ -1,5 +1,13 @@
 /* pages/index/index.wxss */
 page{
+  height: 100%;
   background-color: black;
   color: #fff;
+}
+.animate-img{
+  padding-bottom: 40rpx;
+}
+.animate-img image{
+  width: 600rpx;
+  height: 600rpx;
 }

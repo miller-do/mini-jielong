@@ -1,8 +1,9 @@
 // pages/fight-desk/fight-desk.js
+//json横屏配置 "pageOrientation":"landscape"
 const app = getApp();
 import {wordsdata} from '../../utils/wordsData'
 import setAudio from '../../utils/audio' 
-
+let {debounce,throttle}=require('../../utils/util')
 Page({
 
   /**
@@ -30,49 +31,180 @@ Page({
       title:"提示",
       content:"您的生命值已不足，确定要投降吗？"
     },
+    mode:1,
+    browseMode:{
+      browseWord:"",
+      explainWord:null
+    },
+    historyWords:[],
+    animatedType:'lightSpeedIn',
+    show: false,
+    buttons: [
+        {
+            type: 'default',
+            className: '',
+            text: '拒绝',
+            value: 0
+        },
+        {
+            type: 'primary',
+            className: '',
+            text: '允许',
+            value: 1
+        }
+    ],
+    avatarUrl:'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+    nickname:""
+  },
+  formSubmit(e){
+    console.log('form发生了submit事件，携带数据为：', e)
+    if (!e.detail.value.nickname) {
+      wx.showModal({
+        content:'请填入昵称！'
+      })
+      return
+    }
+   
+    wx.setStorageSync('curUserInfo', e.detail.value)
+    this.setData({
+      nickname:e.detail.value.nickname,
+      show: false
+    })
+  },
+  reject(){
+    this.setData({
+      show: false
+    })
+  },
+  onChooseAvatar(e) {
+    const { avatarUrl } = e.detail 
+    this.setData({
+      avatarUrl,
+    })
+  },
+
+  getuseInfo: function () {
+    this.setData({
+        show: true
+    })
+  },
+  buttontap(e) {
+    console.log(e.detail)
+    if (e.detail.index==1) {
+      this.formSubmit(e)
+      this.setData({
+        show: false
+      })
+    } else {
+      this.setData({
+        show: false
+      })
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // console.log('options',options)
-    //获取龙头
-    let word = wordsdata[Math.floor(Math.random()*wordsdata.length)];
+    let mode=wx.getStorageSync('mode');
+    if (mode) {
+      this.setData({
+        mode:mode
+      })
+    }else{
+      wx.setStorageSync('mode', options.id);
+      this.setData({
+        mode:options.id
+      })
+    }
+    
+    // console.log('mode',this.data.mode)
 
     //初始玩家信息
-    this.data.healthStatus=[  
+    this.data.healthStatus=[
       {id:1,value:3},
       {id:2,value:3},
     ]
 
-    this.setData({
-      dragonHeader:word,
-      healthStatus:this.data.healthStatus
-    })
+    //获取龙头
+    let word = wordsdata[Math.floor(Math.random()*wordsdata.length)];
+   
+    //过词模式
+    if (this.data.mode==1) {
+      this.data.historyWords.push(word);
+      this.setData({
+        ['browseMode.browseWord']:word,
+        ['browseMode.explainWord']:word.ex,
+      })
+      // console.log('word.ex',this.data.browseMode)
+      setTimeout(()=>{
+        this.setData({
+          animatedType:'',
+        })
+      },500)
+      // console.log('browseMode.explainWord',this.data.browseMode.explainWord)
+    } else {
+      this.setData({
+        dragonHeader:word,
+        healthStatus:this.data.healthStatus
+      })
+    }
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
+    setAudio.innerAudioContextBgm.stop()
+    setAudio.setAudioBgmDesk().then(res=>{
+      res.play()
+    })
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow() {
-   setTimeout(function(){
-      //音效
-      // setAudio.setAudio(`${app.globalData.baseUrl}/sound/y1285.mp3`)
-   },1000)
+    console.log('onReady')
+  },
+
+  //快速过词
+  getword(){
+    console.log('getword',this.data.historyWords)
+    let curword = wordsdata[Math.floor(Math.random()*wordsdata.length)];
+    this.data.historyWords.some(e=>{
+      // return e.text!=curword.text
+      if (e.text!=curword.text) {
+        this.data.historyWords.push(curword)
+        return true;//跳出循环
+      }else{
+        curword = wordsdata[Math.floor(Math.random()*wordsdata.length)];
+        return true;//跳出循环
+      }
+    })
+    console.log('curword',curword)
+   
+    this.setData({
+      ['browseMode.browseWord']:curword,
+      animatedType:'lightSpeedIn'
+    })
+    setTimeout(()=>{
+      this.setData({
+        animatedType:'',
+      })
+    },500)
   },
 
   //跳过
   gopass(){
     setAudio.setAudio('/static/wrong.mp3');
     let that=this;
+    if (this.data.mode==1) {
+      throttle(this.getword(),3000)
+      return
+    }
+    
     // console.log('this.data.healthStatus',this.data.healthStatus[0].value)
     if(this.data.healthStatus[0].value>0){
       this.data.healthStatus.forEach((item,index)=>{
@@ -104,8 +236,11 @@ Page({
     var that=this;
     wx.showLoading({
       title: '对手作答中',
+    }).then(()=>{
+      console.log('21212')
     })
-    var timer=setTimeout(()=>{
+    var timer=null;
+    timer=setTimeout(()=>{
       // console.log(this.data.words)
       let lastword,indexword;
       if(this.data.words.length<1){
@@ -136,6 +271,7 @@ Page({
             if(item.value<0){
               setAudio.setAudio('/static/oversucess.mp3');
               this.selectComponent('.game-over').overSuccess();
+              setAudio.innerAudioContextBgmDesk.stop();
               return true;
             }
             this.setData({
@@ -179,7 +315,7 @@ Page({
       })
       this.scrollToBottom();
       wx.hideLoading()
-    },2000)
+    },500)
   },
 
   //提示
@@ -351,9 +487,14 @@ Page({
     this.setData({
       sound:this.data.sound=='sound'?'offsound':'sound'
     })
+    if(this.data.sound=='offsound'){
+      setAudio.innerAudioContextBgmDesk.stop();
+    }else{
+      setAudio.innerAudioContextBgmDesk.play();
+    }
   },
 
-  //投降
+  //投降确定按钮
   surrender(){
     setAudio.setAudio('/static/fail.mp3');
     this.setData({
@@ -364,6 +505,7 @@ Page({
       // gameOver:true,
     })
     this.selectComponent('.game-over').overFail()
+    setAudio.innerAudioContextBgmDesk.stop();
     //显示对战清单
   },
   //取消投降
@@ -386,13 +528,13 @@ Page({
     model.setData({
       show:true
     })
-    // model.onconfirm()
   },
   onconfirm(){
     setAudio.setAudio('/static/btnout.mp3');
     wx.navigateBack({
       delta: 1,//返回的页面数，如果 delta 大于现有页面数，则返回到首页。
     })
+    wx.removeStorageSync('mode');
   },
 
   oncancel(){
@@ -403,18 +545,41 @@ Page({
     })
   },
 
+  //退出游戏
+  onGetout(e){
+    // console.log('onGetout',e)
+    setAudio.setAudio('/static/click.mp3');
+    wx.navigateBack({
+      delta:1
+    })
+    wx.removeStorageSync('mode');
+  },
+
+  //重新开始
+  onRestart(e){
+    // console.log('onRestart',this.data.mode)
+    setAudio.setAudio('/static/click.mp3');
+    // this.onShow()
+    wx.redirectTo({
+      url: '/pages/fight-desk/fight-desk?id='+this.data.mode
+    })
+  },
+
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
+    console.log('onHide')
+    setAudio.innerAudioContextBgmDesk.stop();
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+    // console.log('onUnload')
+    setAudio.innerAudioContextBgmDesk.stop();
+    wx.removeStorageSync('mode');
   },
 
   /**
@@ -438,21 +603,5 @@ Page({
 
   },
 
-  //退出游戏
-  onGetout(e){
-    // console.log('onGetout',e)
-    setAudio.setAudio('/static/click.mp3');
-    wx.navigateBack({
-      delta:1
-    })
-  },
-
-  //重新开始
-  onRestart(e){
-    // console.log('onRestart',e)
-    setAudio.setAudio('/static/click.mp3');
-    wx.redirectTo({
-      url: '/pages/fight-desk/fight-desk'
-    })
-  }
+  
 })

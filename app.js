@@ -1,6 +1,6 @@
 // app.js
 import setAudio from './utils/audio' 
-
+console.log('setAudio',setAudio)
 App({
   onLaunch() {
     // 展示本地存储能力
@@ -10,7 +10,11 @@ App({
 
     //设置背景音乐
     // let url=`${this.globalData.baseUrl}/sound/652.mp3`
-    setAudio.setAudio('/static/bgm.mp3',true)
+    // setAudioBgm.setAudio('/static/bgm.mp3',true)
+    setAudio.setAudioBgm().then(res=>{
+      console.log('res',res)
+      res.play()
+    });
 
     // 登录
     wx.login({

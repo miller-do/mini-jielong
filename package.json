@@ -1,0 +1,24 @@
+{
+  "name": "mini-test",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miller-do/mini-jielong.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miller-do/mini-jielong/issues"
+  },
+  "homepage": "https://github.com/miller-do/mini-jielong#readme",
+  "dependencies": {
+    "moment": "^2.29.4",
+    "party-js": "^2.2.0"
+  },
+  "description": ""
+}

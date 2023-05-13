@@ -1,13 +1,14 @@
 <!--components/model-fail/model-fail.wxml-->
 <!-- <text>components/model-fail/model-fail.wxml</text> -->
 <view class="page-container animated slideInDown" wx:if="{{gameOver}}">
-  <view class="content-wrap">
-    <view class="game-info">
-      <view class="user-info"></view>
-      <view>人机对战</view>
-    </view>
-    <view class="fc">
+  <view class="game-info">
+    <view class="user-info"></view>
+    <view>人机对战</view>
+  </view>
+  <view class="content-wrap fc">
+    <view class="game-result fc">
       <view  class="">
+        <!-- <image wx:if="{{sucess}}" class="gif-img" src="/images/success.gif"></image> -->
         <view class="text-wrap">
           <view class="text-content">GAME OVER</view>
           <view class="over-result" wx:if="{{sucess}}">
@@ -21,8 +22,8 @@
 
         </view>
         <view class="btn-group fsa">
-          <image src="/images/getout.png" bindtap="onOvergame" style="width: 80rpx;height: 40rpx;"></image>
-          <image src="/images/restart.png" bindtap="onRestart" style="width: 80rpx;height: 40rpx;"></image>
+          <image src="/images/getout.png" bindtap="onOvergame" style="width: 160rpx;height: 80rpx;"></image>
+          <image src="/images/restart.png" bindtap="onRestart" style="width: 160rpx;height: 80rpx;"></image>
         </view>
       </view>
     </view>

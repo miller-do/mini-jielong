@@ -8,8 +8,8 @@ Page({
    */
   data: {
     bgModels:[
-      {id:1,url:"/images/bg-model.png",name:"人机对战"},
-      // {id:2,url:"/images/bg-model.png",name:"双人游戏"},
+      {id:1,url:"/images/bg-model.png",name:"快速过词"},
+      {id:2,url:"/images/bg-model.png",name:"人机对战"},
       // {id:3,url:"/images/bg-model.png",name:"多人对战"},
     ]
   },
@@ -25,21 +25,21 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady() {
-
+    setAudio.innerAudioContextBgmDesk.stop()
   },
   gofight(e){
     //音效
     setAudio.setInAudio()
     // console.log("11111",e.currentTarget.dataset.item)
     let optionData=e.currentTarget.dataset.item
-    if(optionData.id!=1){
-      wx.showToast({
-        title: '模式待开放……',
-        icon: 'error',
-        duration: 2000
-      })
-      return
-    }
+    // if(optionData.id!=1){
+    //   wx.showToast({
+    //     title: '模式待开放……',
+    //     icon: 'error',
+    //     duration: 2000
+    //   })
+    //   return
+    // }
     //跳转
     wx.navigateTo({
       url: '/pages/fight-desk/fight-desk?id='+optionData.id,
@@ -57,14 +57,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    // console.log('1211',setAudio.innerAudioContextBgm)
+    setAudio.innerAudioContextBgm.play()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
-
+    setAudio.innerAudioContextBgm.stop()
   },
 
   /**

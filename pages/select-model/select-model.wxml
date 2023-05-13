@@ -17,7 +17,7 @@
     <!-- <view class="btn-action" bindtap="backtap">返回</view> -->
     <view class="btns-wrap">
       <view >
-        <image class="animated slideInLeft" bindtap="backtap" src="/images/back.png" style="width:52px;height: 52px;"/>
+        <image class="animated slideInLeft" bindtap="backtap" src="/images/back.png" style="width:104rpx;height: 104rpx;"/>
       </view>
       <rule-info class="animated slideInRight"></rule-info>
       <!-- <view>

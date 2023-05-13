@@ -2,7 +2,10 @@
   "usingComponents": {
     "rule-info":"/components/rule-info/rule-info",
     "model-over":"/components/model-over/model-over",
-    "model-common":"/components/model-common/model-common"
-  },
-  "pageOrientation":"landscape"
+    "model-common":"/components/model-common/model-common",
+    "mp-half-screen-dialog": "weui-miniprogram/half-screen-dialog/half-screen-dialog",
+    "mp-form": "weui-miniprogram/form/form",
+    "mp-cells": "weui-miniprogram/cells/cells",
+    "mp-cell": "weui-miniprogram/cell/cell"
+  }
 }

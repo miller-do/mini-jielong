@@ -27,11 +27,17 @@
 .text-center{
   text-align: center;
 }
+.font-weight{
+  font-weight: 600;
+}
 .width100{
   width: 100%;
 }
 .height100{
   height: 100%;
+}
+.inline-block{
+  display: inline-block;
 }
 .cpn-animated{
   position: absolute;
@@ -47,3 +53,10 @@
   margin-left: -184rpx;
   margin-top: -85rpx;
 } */
+
+.divide{
+  padding: 4rpx 0;
+}
+.t-center{
+  text-align: center;
+}

@@ -6,6 +6,12 @@
     "pages/select-model/select-model",
     "pages/fight-desk/fight-desk"
   ],
+  "usingComponents":{
+    "get-user-info":"/components/getuserInfo/getuserInfo"
+  },
+  "useExtendedLib": {
+    "weui": true    
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
